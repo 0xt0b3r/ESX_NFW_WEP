@@ -511,7 +511,7 @@ AddEventHandler('nfw_wep:HeavyArmor', function()
         if not status then
             SetPedComponentVariation(ped, 9, 10, 0, 0)
             AddArmourToPed(ped, 100)
-            exports['mythic_notify']:DoHudText('inform', 'You have put on Light Body Armor.')
+            exports['mythic_notify']:DoHudText('inform', 'You have put on Heavy Body Armor.')
         end
     end)
 end)
