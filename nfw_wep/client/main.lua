@@ -1,6 +1,22 @@
 ESX = nil
 local IsDead = false
 
+pistol = {453432689, 3219281620, 1593441988, -1716589765, -1076751822, -771403250, 137902532, -598887786, -1045183535, 584646201}
+mg = {324215364, -619010992, 736523883, 2024373456, -270015777, 171789620, -1660422300, 2144741730, 3686625920, 1627465347, -1121678507}
+ar = {-1074790547, 961495388, -2084633992, 4208062921, -1357824103, -1063057011, 2132975508, 1649403952}
+sg = {487013001, 2017895192, -1654528753, -494615257, -1466123874, 984333226, -275439685, 317205821}
+
+supp1 = {-2084633992, -1357824103, 2132975508, -494615257}
+supp2 = {-1716589765, 324215364, -270015777, -1074790547, -1063057011, -1654528753, 984333226}
+supp3 = {1593441988, -771403250, 584646201, 137902532, 736523883}
+supp4 = {487013001}
+
+flash1 = {453432689, 1593441988, 584646201, -1716589765, -771403250, 324215364}
+flash2 = {736523883, -270015777, 171789620, -1074790547, -2084633992, -1357824103, -1063057011, 2132975508, 487013001, -494615257, -1654528753, 984333226}
+
+grip1 = {171789620, -1074790547, -2084633992, -1063057011, 2132975508, 2144741730, -494615257, -1654528753, 984333226}
+
+
 Citizen.CreateThread(function()
 	while ESX == nil do
 		TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
@@ -23,9 +39,10 @@ end)
 local used = 0
 
 RegisterNetEvent('nfw_wep:silencieux')
-AddEventHandler('nfw_wep:silencieux', function(duration)
+AddEventHandler('nfw_wep:silencieux', function()
     local inventory = ESX.GetPlayerData().inventory
     local silencieux = 0
+    local item = 'silencieux'
     
     for i=1, #inventory, 1 do
         if inventory[i].name == 'silencieux' then
@@ -40,111 +57,35 @@ AddEventHandler('nfw_wep:silencieux', function(duration)
         GiveWeaponComponentToPed(GetPlayerPed(-1), GetHashKey("WEAPON_PISTOL"), GetHashKey("component_at_pi_supp_02"))
         exports['mythic_notify']:DoHudText('inform', 'You have equipped a silencer!')
         used = used + 1
-    
-    elseif WepHash == GetHashKey("WEAPON_PISTOL50") then
-        GiveWeaponComponentToPed(GetPlayerPed(-1), GetHashKey("WEAPON_PISTOL50"), GetHashKey("COMPONENT_AT_AR_SUPP_02"))
+    elseif table.includes(supp1, WepHash) then
+        GiveWeaponComponentToPed(GetPlayerPed(-1), WepHash, 0x837445AA)
         exports['mythic_notify']:DoHudText('inform', 'You have equipped a silencer!')
         used = used + 1
-   
-    elseif WepHash == GetHashKey("WEAPON_COMBATPISTOL") then
-        GiveWeaponComponentToPed(GetPlayerPed(-1), GetHashKey("WEAPON_COMBATPISTOL"), GetHashKey("COMPONENT_AT_PI_SUPP"))
+    elseif table.includes(supp2, WepHash) then
+        GiveWeaponComponentToPed(GetPlayerPed(-1), WepHash, 0xA73D4664)
         exports['mythic_notify']:DoHudText('inform', 'You have equipped a silencer!')
         used = used + 1
-    elseif WepHash == GetHashKey("WEAPON_APPISTOL") then
-        GiveWeaponComponentToPed(GetPlayerPed(-1), GetHashKey("WEAPON_APPISTOL"), GetHashKey("COMPONENT_AT_PI_SUPP"))
+    elseif table.includes(supp3, WepHash) then
+        GiveWeaponComponentToPed(GetPlayerPed(-1), WepHash, 0xC304849A)
         exports['mythic_notify']:DoHudText('inform', 'You have equipped a silencer!')
         used = used + 1
-    
-    elseif WepHash == GetHashKey("WEAPON_HEAVYPISTOL") then
-        GiveWeaponComponentToPed(GetPlayerPed(-1), GetHashKey("WEAPON_HEAVYPISTOL"), GetHashKey("COMPONENT_AT_PI_SUPP"))
-        exports['mythic_notify']:DoHudText('inform', 'You have equipped a silencer!')
-        used = used + 1
-    
-    elseif WepHash == GetHashKey("WEAPON_VINTAGEPISTOL") then
-        GiveWeaponComponentToPed(GetPlayerPed(-1), GetHashKey("WEAPON_VINTAGEPISTOL"), GetHashKey("COMPONENT_AT_PI_SUPP"))
-        exports['mythic_notify']:DoHudText('inform', 'You have equipped a silencer!')
-        used = used + 1
-    
-    elseif WepHash == GetHashKey("WEAPON_SMG") then
-        GiveWeaponComponentToPed(GetPlayerPed(-1), GetHashKey("WEAPON_SMG"), GetHashKey("COMPONENT_AT_PI_SUPP"))
-        exports['mythic_notify']:DoHudText('inform', 'You have equipped a silencer!')
-        used = used + 1
-    
-    elseif WepHash == GetHashKey("WEAPON_MICROSMG") then
-        GiveWeaponComponentToPed(GetPlayerPed(-1), GetHashKey("WEAPON_MICROSMG"), GetHashKey("COMPONENT_AT_AR_SUPP_02"))
-        exports['mythic_notify']:DoHudText('inform', 'You have equipped a silencer!')
-        used = used + 1
-    
-    elseif WepHash == GetHashKey("WEAPON_ASSAULTSMG") then
-        GiveWeaponComponentToPed(GetPlayerPed(-1), GetHashKey("WEAPON_ASSAULTSMG"), GetHashKey("COMPONENT_AT_AR_SUPP_02"))
-        exports['mythic_notify']:DoHudText('inform', 'You have equipped a silencer!')
-        used = used + 1
-    
-    elseif WepHash == GetHashKey("WEAPON_ASSAULTRIFLE") then
-        GiveWeaponComponentToPed(GetPlayerPed(-1), GetHashKey("WEAPON_ASSAULTRIFLE"), GetHashKey("COMPONENT_ATCOMPONENT_AT_AR_SUPP_02_PI_SUPP"))
-        exports['mythic_notify']:DoHudText('inform', 'You have equipped a silencer!')
-        used = used + 1
-    
-    elseif WepHash == GetHashKey("WEAPON_CARBINERIFLE") then
-        GiveWeaponComponentToPed(GetPlayerPed(-1), GetHashKey("WEAPON_CARBINERIFLE"), GetHashKey("COMPONENT_AT_AR_SUPP"))
-        exports['mythic_notify']:DoHudText('inform', 'You have equipped a silencer!')
-        used = used + 1
-   
-    elseif WepHash == GetHashKey("WEAPON_ADVANCEDRIFLE") then
-        GiveWeaponComponentToPed(GetPlayerPed(-1), GetHashKey("WEAPON_ADVANCEDRIFLE"), GetHashKey("COMPONENT_AT_AR_SUPP"))
-        exports['mythic_notify']:DoHudText('inform', 'You have equipped a silencer!')
-        used = used + 1
-   
-    elseif WepHash == GetHashKey("WEAPON_SPECIALCARBINE") then
-        GiveWeaponComponentToPed(GetPlayerPed(-1), GetHashKey("WEAPON_SPECIALCARBINE"), GetHashKey("COMPONENT_AT_AR_SUPP_02"))
-        exports['mythic_notify']:DoHudText('inform', 'You have equipped a silencer!')
-        used = used + 1
-    
-    elseif WepHash == GetHashKey("WEAPON_BULLPUPRIFLE") then
-        GiveWeaponComponentToPed(GetPlayerPed(-1), GetHashKey("WEAPON_BULLPUPRIFLE"), GetHashKey("COMPONENT_AT_AR_SUPP"))
-        exports['mythic_notify']:DoHudText('inform', 'You have equipped a silencer!')
-        used = used + 1
-    
-    elseif WepHash == GetHashKey("WEAPON_ASSAULTSHOTGUN") then
-        GiveWeaponComponentToPed(GetPlayerPed(-1), GetHashKey("WEAPON_ASSAULTSHOTGUN"), GetHashKey("COMPONENT_AT_AR_SUPP"))
-        exports['mythic_notify']:DoHudText('inform', 'You have equipped a silencer!')
-        used = used + 1
-    
-    elseif WepHash == GetHashKey("WEAPON_HEAVYSHOTGUN") then
-        GiveWeaponComponentToPed(GetPlayerPed(-1), GetHashKey("WEAPON_HEAVYSHOTGUN"), GetHashKey("COMPONENT_AT_AR_SUPP_02"))
-        exports['mythic_notify']:DoHudText('inform', 'You have equipped a silencer!')
-        used = used + 1
-    
-    elseif WepHash == GetHashKey("WEAPON_BULLPUPSHOTGUN") then
-        GiveWeaponComponentToPed(GetPlayerPed(-1), GetHashKey("WEAPON_BULLPUPSHOTGUN"), GetHashKey("COMPONENT_AT_AR_SUPP_02"))
-        exports['mythic_notify']:DoHudText('inform', 'You have equipped a silencer!')
-        used = used + 1
-    
-    elseif WepHash == GetHashKey("WEAPON_PUMPSHOTGUN") then
-        GiveWeaponComponentToPed(GetPlayerPed(-1), GetHashKey("WEAPON_PUMPSHOTGUN"), GetHashKey("COMPONENT_AT_SR_SUPP"))
-        exports['mythic_notify']:DoHudText('inform', 'You have equipped a silencer!')
-        used = used + 1
-    
-    elseif WepHash == GetHashKey("WEAPON_MARKSMANRIFLE") then
-        GiveWeaponComponentToPed(GetPlayerPed(-1), GetHashKey("WEAPON_MARKSMANRIFLE"), GetHashKey("COMPONENT_AT_AR_SUPP"))
-        exports['mythic_notify']:DoHudText('inform', 'You have equipped a silencer!')
-        used = used + 1
-    
-    elseif WepHash == GetHashKey("WEAPON_SNIPERRIFLE") then
-        GiveWeaponComponentToPed(GetPlayerPed(-1), GetHashKey("WEAPON_SNIPERRIFLE"), GetHashKey("COMPONENT_AT_AR_SUPP_02"))
+    elseif table.includes(supp4, WepHash) then
+        GiveWeaponComponentToPed(GetPlayerPed(-1), WepHash, 0xE608B35E)
         exports['mythic_notify']:DoHudText('inform', 'You have equipped a silencer!')
         used = used + 1
     else
-        exports['mythic_notify']:DoHudText('inform', 'You have used all your silencers')
+        exports['mythic_notify']:DoHudText('inform', 'This weapon is not compatible with a silencer')
+        TriggerServerEvent('returnItem', item)
     end
 end)
 
 local used2 = 0
 
 RegisterNetEvent('nfw_wep:flashlight')
-AddEventHandler('nfw_wep:flashlight', function(duration)                    
+AddEventHandler('nfw_wep:flashlight', function() 
     local inventory = ESX.GetPlayerData().inventory
-	local flashlight = 0
+    local flashlight = 0
+    local item = 'flashlight'
     
     for i=1, #inventory, 1 do
 		if inventory[i].name == 'flashlight' then
@@ -152,119 +93,27 @@ AddEventHandler('nfw_wep:flashlight', function(duration)
 		end
 	end
     local ped = PlayerPedId()
-    local currentWeaponHash = GetSelectedPedWeapon(ped)
-        
-    if used2 < flashlight then
-		print('used2')
+    local WepHash = GetSelectedPedWeapon(ped)
 
-		if currentWeaponHash == GetHashKey("WEAPON_PISTOL") then
-		  	GiveWeaponComponentToPed(GetPlayerPed(-1), GetHashKey("WEAPON_PISTOL"), GetHashKey("COMPONENT_AT_PI_FLSH"))  
-		  	exports['mythic_notify']:DoHudText('inform', 'You have equipped a flashlight!') 
-		  	used2 = used2 + 1
-        
-        elseif currentWeaponHash == GetHashKey("WEAPON_PISTOL50") then
-			GiveWeaponComponentToPed(GetPlayerPed(-1), GetHashKey("WEAPON_PISTOL50"), GetHashKey("COMPONENT_AT_PI_FLSH"))  
-            exports['mythic_notify']:DoHudText('inform', 'You have equipped a flashlight!')	        
-            used2 = used2 + 1
-        
-        elseif currentWeaponHash == GetHashKey("WEAPON_COMBATPISTOL") then
-		  	GiveWeaponComponentToPed(GetPlayerPed(-1), GetHashKey("WEAPON_COMBATPISTOL"), GetHashKey("COMPONENT_AT_PI_FLSH"))  
-            exports['mythic_notify']:DoHudText('inform', 'You have equipped a flashlight!')	        
-            used2 = used2 + 1
-        
-        elseif currentWeaponHash == GetHashKey("WEAPON_APPISTOL") then
-	  		GiveWeaponComponentToPed(GetPlayerPed(-1), GetHashKey("WEAPON_APPISTOL"), GetHashKey("COMPONENT_AT_PI_FLSH"))  
-            exports['mythic_notify']:DoHudText('inform', 'You have equipped a flashlight!')	        
-            used2 = used2 + 1
-        
-        elseif currentWeaponHash == GetHashKey("WEAPON_HEAVYPISTOL") then
-		    GiveWeaponComponentToPed(GetPlayerPed(-1), GetHashKey("WEAPON_HEAVYPISTOL"), GetHashKey("COMPONENT_AT_PI_FLSH"))  
-            exports['mythic_notify']:DoHudText('inform', 'You have equipped a flashlight!')	        
-            used2 = used2 + 1
-        
-        elseif currentWeaponHash == GetHashKey("WEAPON_SMG") then
-		    GiveWeaponComponentToPed(GetPlayerPed(-1), GetHashKey("WEAPON_SMG"), GetHashKey("COMPONENT_AT_AR_FLSH"))  
-            exports['mythic_notify']:DoHudText('inform', 'You have equipped a flashlight!')
-            used2 = used2 + 1
-        
-        elseif currentWeaponHash == GetHashKey("WEAPON_MICROSMG") then
-		    GiveWeaponComponentToPed(GetPlayerPed(-1), GetHashKey("WEAPON_MICROSMG"), GetHashKey("COMPONENT_AT_PI_FLSH"))  
-            exports['mythic_notify']:DoHudText('inform', 'You have equipped a flashlight!')	        
-            used2 = used2 + 1
-        
-        elseif currentWeaponHash == GetHashKey("WEAPON_ASSAULTSMG") then
-		  	GiveWeaponComponentToPed(GetPlayerPed(-1), GetHashKey("WEAPON_ASSAULTSMG"), GetHashKey("COMPONENT_AT_AR_FLSH"))  
-            exports['mythic_notify']:DoHudText('inform', 'You have equipped a flashlight!')	        
-            used2 = used2 + 1
-        
-        elseif currentWeaponHash == GetHashKey("WEAPON_COMBATPDW") then
-		  	GiveWeaponComponentToPed(GetPlayerPed(-1), GetHashKey("WEAPON_COMBATPDW"), GetHashKey("COMPONENT_AT_AR_FLSH"))  
-            exports['mythic_notify']:DoHudText('inform', 'You have equipped a flashlight!')	        
-            used2 = used2 + 1
-        
-        elseif currentWeaponHash == GetHashKey("WEAPON_ASSAULTRIFLE") then
-		  	GiveWeaponComponentToPed(GetPlayerPed(-1), GetHashKey("WEAPON_ASSAULTRIFLE"), GetHashKey("COMPONENT_AT_AR_FLSH"))  
-            exports['mythic_notify']:DoHudText('inform', 'You have equipped a flashlight!')	        
-            used2 = used2 + 1
-        
-        elseif currentWeaponHash == GetHashKey("WEAPON_CARBINERIFLE") then
-		  	GiveWeaponComponentToPed(GetPlayerPed(-1), GetHashKey("WEAPON_CARBINERIFLE"), GetHashKey("COMPONENT_AT_AR_FLSH"))  
-            exports['mythic_notify']:DoHudText('inform', 'You have equipped a flashlight!')	        
-            used2 = used2 + 1
-        
-        elseif currentWeaponHash == GetHashKey("WEAPON_ADVANCEDRIFLE") then
-		  	GiveWeaponComponentToPed(GetPlayerPed(-1), GetHashKey("WEAPON_ADVANCEDRIFLE"), GetHashKey("COMPONENT_AT_AR_FLSH"))  
-            exports['mythic_notify']:DoHudText('inform', 'You have equipped a flashlight!')	        
-            used2 = used2 + 1
-        
-        elseif currentWeaponHash == GetHashKey("WEAPON_SPECIALCARBINE") then
-		  	GiveWeaponComponentToPed(GetPlayerPed(-1), GetHashKey("WEAPON_SPECIALCARBINE"), GetHashKey("COMPONENT_AT_AR_FLSH"))  
-            exports['mythic_notify']:DoHudText('inform', 'You have equipped a flashlight!')	        
-            used2 = used2 + 1
-        
-        elseif currentWeaponHash == GetHashKey("WEAPON_BULLPUPRIFLE") then
-		  	GiveWeaponComponentToPed(GetPlayerPed(-1), GetHashKey("WEAPON_BULLPUPRIFLE"), GetHashKey("COMPONENT_AT_AR_FLSH"))  
-            exports['mythic_notify']:DoHudText('inform', 'You have equipped a flashlight!')         
-            used2 = used2 + 1
-        
-        elseif currentWeaponHash == GetHashKey("WEAPON_ASSAULTSHOTGUN") then
-		  	GiveWeaponComponentToPed(GetPlayerPed(-1), GetHashKey("WEAPON_ASSAULTSHOTGUN"), GetHashKey("COMPONENT_AT_AR_FLSH"))  
-            exports['mythic_notify']:DoHudText('inform', 'You have equipped a flashlight!')	        
-            used2 = used2 + 1
-        
-        elseif currentWeaponHash == GetHashKey("WEAPON_HEAVYSHOTGUN") then
-		  	GiveWeaponComponentToPed(GetPlayerPed(-1), GetHashKey("WEAPON_HEAVYSHOTGUN"), GetHashKey("COMPONENT_AT_AR_FLSH"))  
-            exports['mythic_notify']:DoHudText('inform', 'You have equipped a flashlight!')	        
-            used2 = used2 + 1
-        
-        elseif currentWeaponHash == GetHashKey("WEAPON_BULLPUPSHOTGUN") then
-		  	GiveWeaponComponentToPed(GetPlayerPed(-1), GetHashKey("WEAPON_BULLPUPSHOTGUN"), GetHashKey("COMPONENT_AT_AR_FLSH"))  
-            exports['mythic_notify']:DoHudText('inform', 'You have equipped a flashlight!')	        
-            used2 = used2 + 1
-        
-        elseif currentWeaponHash == GetHashKey("WEAPON_PUMPSHOTGUN") then
-		  	GiveWeaponComponentToPed(GetPlayerPed(-1), GetHashKey("WEAPON_PUMPSHOTGUN"), GetHashKey("COMPONENT_AT_AR_FLSH"))  
-            exports['mythic_notify']:DoHudText('inform', 'You have equipped a flashlight!')	        
-            used2 = used2 + 1
-        
-        elseif currentWeaponHash == GetHashKey("WEAPON_MARKSMANRIFLE") then
-		  	GiveWeaponComponentToPed(GetPlayerPed(-1), GetHashKey("WEAPON_MARKSMANRIFLE"), GetHashKey("COMPONENT_AT_AR_FLSH"))  
-            exports['mythic_notify']:DoHudText('inform', 'You have equipped a flashlight!')	        
-            used2 = used2 + 1
-		else 
-            exports['mythic_notify']:DoHudText('inform', 'You do not have a weapon in hand that can equip a flashlight')	 
-		end
-	else
-		exports['mythic_notify']:DoHudText('inform', 'You have used all your flashlights')	 
-	end
+    if table.includes(flash1, WepHash) then
+        GiveWeaponComponentToPed(GetPlayerPed(-1), WepHash, 0x359B7AAE)
+        exports['mythic_notify']:DoHudText('inform', 'You have equipped a flashlight!')
+    elseif table.includes(flash2, WepHash) then
+        GiveWeaponComponentToPed(GetPlayerPed(-1), WepHash, 0x7BC4CDDC)
+        exports['mythic_notify']:DoHudText('inform', 'You have equipped a flashlight!')
+    else
+        exports['mythic_notify']:DoHudText('inform', 'This weapon is not compatible with a flashlight')
+        TriggerServerEvent('returnItem', item)
+    end
 end)
 
 local used3 = 0
 
 RegisterNetEvent('nfw_wep:grip')
-AddEventHandler('nfw_wep:grip', function(duration)
+AddEventHandler('nfw_wep:grip', function()
     local inventory = ESX.GetPlayerData().inventory
     local grip = 0
+    local item = 'grip'
 
     for i=1, #inventory, 1 do
         if inventory[i].name == 'grip' then
@@ -273,62 +122,19 @@ AddEventHandler('nfw_wep:grip', function(duration)
     end
 
     local ped = PlayerPedId()
-    local currentWeaponHash = GetSelectedPedWeapon(ped)
-    if used3 < grip then
-        if currentWeaponHash == GetHashKey("WEAPON_COMBATPDW") then
-            GiveWeaponComponentToPed(GetPlayerPed(-1), GetHashKey("WEAPON_COMBATPDW"), GetHashKey("COMPONENT_AT_AR_AFGRIP"))
-            exports['mythic_notify']:DoHudText('inform', 'You have equipped a grip!')
-            used3 = used3 + 1
-        
-        elseif currentWeaponHash == GetHashKey("WEAPON_ASSAULTRIFLE") then
-            GiveWeaponComponentToPed(GetPlayerPed(-1), GetHashKey("WEAPON_ASSAULTRIFLE"), GetHashKey("COMPONENT_AT_AR_AFGRIP"))
-            exports['mythic_notify']:DoHudText('inform', 'You have equipped a grip!')
-            used3 = used3 + 1
-        
-        elseif currentWeaponHash == GetHashKey("WEAPON_CARBINERIFLE") then
-            GiveWeaponComponentToPed(GetPlayerPed(-1), GetHashKey("WEAPON_CARBINERIFLE"), GetHashKey("COMPONENT_AT_AR_AFGRIP"))
-            exports['mythic_notify']:DoHudText('inform', 'You have equipped a grip!')
-            used3 = used3 + 1
-       
-        elseif currentWeaponHash == GetHashKey("WEAPON_SPECIALCARBINE") then
-            GiveWeaponComponentToPed(GetPlayerPed(-1), GetHashKey("WEAPON_SPECIALCARBINE"), GetHashKey("COMPONENT_AT_AR_AFGRIP"))
-            exports['mythic_notify']:DoHudText('inform', 'You have equipped a grip!')
-            used3 = used3 + 1
-        
-        elseif currentWeaponHash == GetHashKey("WEAPON_BULLPUPRIFLE") then
-            GiveWeaponComponentToPed(GetPlayerPed(-1), GetHashKey("WEAPON_BULLPUPRIFLE"), GetHashKey("COMPONENT_AT_AR_AFGRIP"))
-            exports['mythic_notify']:DoHudText('inform', 'You have equipped a grip!')
-            used3 = used3 + 1
-        
-        elseif currentWeaponHash == GetHashKey("WEAPON_ASSAULTSHOTGUN") then
-            GiveWeaponComponentToPed(GetPlayerPed(-1), GetHashKey("WEAPON_ASSAULTSHOTGUN"), GetHashKey("COMPONENT_AT_AR_AFGRIP"))
-            exports['mythic_notify']:DoHudText('inform', 'You have equipped a grip!')
-            used3 = used3 + 1
-        
-        elseif currentWeaponHash == GetHashKey("WEAPON_HEAVYSHOTGUN") then
-            GiveWeaponComponentToPed(GetPlayerPed(-1), GetHashKey("WEAPON_HEAVYSHOTGUN"), GetHashKey("COMPONENT_AT_AR_AFGRIP"))
-            exports['mythic_notify']:DoHudText('inform', 'You have equipped a grip!')
-            used3 = used3 + 1
-       
-        elseif currentWeaponHash == GetHashKey("WEAPON_BULLPUPSHOTGUN") then
-            GiveWeaponComponentToPed(GetPlayerPed(-1), GetHashKey("WEAPON_BULLPUPSHOTGUN"), GetHashKey("COMPONENT_AT_AR_AFGRIP"))
-            exports['mythic_notify']:DoHudText('inform', 'You have equipped a grip!')
-            used3 = used3 + 1
-        
-        elseif currentWeaponHash == GetHashKey("WEAPON_MARKSMANRIFLE") then
-            GiveWeaponComponentToPed(GetPlayerPed(-1), GetHashKey("WEAPON_MARKSMANRIFLE"), GetHashKey("COMPONENT_AT_AR_AFGRIP"))
-            exports['mythic_notify']:DoHudText('inform', 'You have equipped a grip!')
-            used3 = used3 + 1
-        else
-            exports['mythic_notify']:DoHudText('inform', 'You do not have a wepaon in hand that is compatible with a grip')
-        end
+    local WepHash = GetSelectedPedWeapon(ped) 
+
+    if table.includes(grip1, WepHash) then
+        GiveWeaponComponentToPed(GetPlayerPed(-1), WepHash, 0xC164F53)
+        exports['mythic_notify']:DoHudText('inform', 'You have equipped a grip!')
     else
-        exports['mythic_notify']:DoHudText('inform', 'You have used all your grip!')
+        exports['mythic_notify']:DoHudText('inform', 'This weapon is not compatible with a grip')
+        TriggerServerEvent('returnItem', item)
     end
 end)
 
 RegisterNetEvent('nfw_wep:yusuf')
-AddEventHandler('nfw_wep:yusuf', function(duration)
+AddEventHandler('nfw_wep:yusuf', function()
     local inventory = ESX.GetPlayerData().inventory
     local yusuf = 0
     for i=1, #inventory, 1 do
@@ -511,7 +317,7 @@ AddEventHandler('nfw_wep:HeavyArmor', function()
         if not status then
             SetPedComponentVariation(ped, 9, 10, 0, 0)
             AddArmourToPed(ped, 100)
-            exports['mythic_notify']:DoHudText('inform', 'You have put on Heavy Body Armor.')
+            exports['mythic_notify']:DoHudText('inform', 'You have put on Light Body Armor.')
         end
     end)
 end)
@@ -529,30 +335,9 @@ AddEventHandler('nfw_wep:pAmmo', function()
         return
     end
 
-    if currentWeaponHash == GetHashKey("WEAPON_PISTOL") then
-        AddAmmoToPed(ped, currentWeaponHash, 50)
+    if table.includes(pistol, currentWeaponHash) then
         exports['mythic_notify']:DoHudText('inform', 'Added 50 more Pistol ammo')
-    elseif currentWeaponHash == GetHashKey("WEAPON_COMBATPISTOL") then
         AddAmmoToPed(ped, currentWeaponHash, 50)
-        exports['mythic_notify']:DoHudText('inform', 'Added 50 more Pistol ammo')
-    elseif currentWeaponHash == GetHashKey("WEAPON_PISTOL50") then
-        AddAmmoToPed(ped, currentWeaponHash, 50)
-        exports['mythic_notify']:DoHudText('inform', 'Added 50 more Pistol ammo')
-    elseif currentWeaponHash == GetHashKey("WEAPON_SNSPISTOL") then
-        AddAmmoToPed(ped, currentWeaponHash, 50)
-        exports['mythic_notify']:DoHudText('inform', 'Added 50 more Pistol ammo')
-    elseif currentWeaponHash == GetHashKey("WEAPON_HEAVYPISTOL") then
-        AddAmmoToPed(ped, currentWeaponHash, 50)
-        exports['mythic_notify']:DoHudText('inform', 'Added 50 more Pistol ammo')
-    elseif currentWeaponHash == GetHashKey("WEAPON_VINTAGEPISTOL") then
-        AddAmmoToPed(ped, currentWeaponHash, 50)
-        exports['mythic_notify']:DoHudText('inform', 'Added 50 more Pistol ammo')
-    elseif currentWeaponHash == GetHashKey("WEAPON_REVOLVER") then
-        AddAmmoToPed(ped, currentWeaponHash, 50)
-        exports['mythic_notify']:DoHudText('inform', 'Added 50 more Pistol ammo')
-    elseif currentWeaponHash == GetHashKey("WEAPON_APPISTOL") then
-        AddAmmoToPed(ped, currentWeaponHash, 50)
-        exports['mythic_notify']:DoHudText('inform', 'Added 50 more Pistol ammo')
     else
         exports['mythic_notify']:DoHudText('inform', 'This weapon is not compatible with this ammo')
         TriggerServerEvent('returnItem', item)
@@ -572,33 +357,9 @@ AddEventHandler('nfw_wep:mgAmmo', function()
         return
     end
 
-    if currentWeaponHash == GetHashKey("WEAPON_MICROSMG") then
-        AddAmmoToPed(ped, currentWeaponHash, 50)
+    if table.includes(mg, currentWeaponHash) then
         exports['mythic_notify']:DoHudText('inform', 'Added 50 more Machine Gun ammo')
-    elseif currentWeaponHash == GetHashKey("WEAPON_MACHINEPISTOL") then
         AddAmmoToPed(ped, currentWeaponHash, 50)
-        exports['mythic_notify']:DoHudText('inform', 'Added 50 more Machine Gun ammo')
-    elseif currentWeaponHash == GetHashKey("WEAPON_SMG") then
-        AddAmmoToPed(ped, currentWeaponHash, 50)
-        exports['mythic_notify']:DoHudText('inform', 'Added 50 more Machine Gun ammo')
-    elseif currentWeaponHash == GetHashKey("WEAPON_ASSAULTSMG") then
-        AddAmmoToPed(ped, currentWeaponHash, 50)
-        exports['mythic_notify']:DoHudText('inform', 'Added 50 more Machine Gun ammo')
-    elseif currentWeaponHash == GetHashKey("WEAPON_COMBATPDW") then
-        AddAmmoToPed(ped, currentWeaponHash, 50)
-        exports['mythic_notify']:DoHudText('inform', 'Added 50 more Machine Gun ammo')
-    elseif currentWeaponHash == GetHashKey("WEAPON_MG") then
-        AddAmmoToPed(ped, currentWeaponHash, 50)
-        exports['mythic_notify']:DoHudText('inform', 'Added 50 more Machine Gun ammo')
-    elseif currentWeaponHash == GetHashKey("WEAPON_COMBATMG") then
-        AddAmmoToPed(ped, currentWeaponHash, 50)
-        exports['mythic_notify']:DoHudText('inform', 'Added 50 more Machine Gun ammo')
-    elseif currentWeaponHash == GetHashKey("WEAPON_GUSENBERG") then
-        AddAmmoToPed(ped, currentWeaponHash, 50)
-        exports['mythic_notify']:DoHudText('inform', 'Added 50 more Machine Gun ammo')
-    elseif currentWeaponHash == GetHashKey("WEAPON_MINISMG") then
-        AddAmmoToPed(ped, currentWeaponHash, 50)
-        exports['mythic_notify']:DoHudText('inform', 'Added 50 more Machine Gun ammo')
     else
         exports['mythic_notify']:DoHudText('inform', 'This weapon is not compatible with this ammo')
         TriggerServerEvent('returnItem', item)
@@ -618,24 +379,9 @@ AddEventHandler('nfw_wep:arAmmo', function()
         return
     end
 
-    if currentWeaponHash == GetHashKey("WEAPON_ASSAULTRIFLE") then
-        AddAmmoToPed(ped, currentWeaponHash, 50)
+    if table.includes(ar, currentWeaponHash) then
         exports['mythic_notify']:DoHudText('inform', 'Added 50 more Assault Rifle ammo')
-    elseif currentWeaponHash == GetHashKey("WEAPON_CARBINERIFLE") then
         AddAmmoToPed(ped, currentWeaponHash, 50)
-        exports['mythic_notify']:DoHudText('inform', 'Added 50 more Assault Rifle ammo')
-    elseif currentWeaponHash == GetHashKey("WEAPON_ADVANCEDRIFLE") then
-        AddAmmoToPed(ped, currentWeaponHash, 50)
-        exports['mythic_notify']:DoHudText('inform', 'Added 50 more Assault Rifle ammo')
-    elseif currentWeaponHash == GetHashKey("WEAPON_SPECIALCARBINE") then
-        AddAmmoToPed(ped, currentWeaponHash, 50)
-        exports['mythic_notify']:DoHudText('inform', 'Added 50 more Assault Rifle ammo')
-    elseif currentWeaponHash == GetHashKey("WEAPON_BULLPUPRIFLE") then
-        AddAmmoToPed(ped, currentWeaponHash, 50)
-        exports['mythic_notify']:DoHudText('inform', 'Added 50 more Assault Rifle ammo')
-    elseif currentWeaponHash == GetHashKey("WEAPON_COMPACTRIFLE") then
-        AddAmmoToPed(ped, currentWeaponHash, 50)
-        exports['mythic_notify']:DoHudText('inform', 'Added 50 more Assault Rifle ammo')
     else
         exports['mythic_notify']:DoHudText('inform', 'This weapon is not compatible with this ammo')
         TriggerServerEvent('returnItem', item)
@@ -655,32 +401,20 @@ AddEventHandler('nfw_wep:sgAmmo', function()
         return
     end
 
-    if currentWeaponHash == GetHashKey("WEAPON_PUMPSHOTGUN") then
-        AddAmmoToPed(ped, currentWeaponHash, 50)
+    if table.includes(sg, currentWeaponHash) then
         exports['mythic_notify']:DoHudText('inform', 'Added 50 more Shotgun ammo')
-    elseif currentWeaponHash == GetHashKey("WEAPON_SAWNOFFSHOTGUN") then
         AddAmmoToPed(ped, currentWeaponHash, 50)
-        exports['mythic_notify']:DoHudText('inform', 'Added 50 more Shotgun ammo')
-    elseif currentWeaponHash == GetHashKey("WEAPON_BULLPUPSHOTGUN") then
-        AddAmmoToPed(ped, currentWeaponHash, 50)
-        exports['mythic_notify']:DoHudText('inform', 'Added 50 more Shotgun ammo')
-    elseif currentWeaponHash == GetHashKey("WEAPON_ASSAULTSHOTGUN") then
-        AddAmmoToPed(ped, currentWeaponHash, 50)
-        exports['mythic_notify']:DoHudText('inform', 'Added 50 more Shotgun ammo')
-    elseif currentWeaponHash == GetHashKey("WEAPON_MUSKET") then
-        AddAmmoToPed(ped, currentWeaponHash, 50)
-        exports['mythic_notify']:DoHudText('inform', 'Added 50 more Shotgun ammo')
-    elseif currentWeaponHash == GetHashKey("WEAPON_HEAVYSHOTGUN") then
-        AddAmmoToPed(ped, currentWeaponHash, 50)
-        exports['mythic_notify']:DoHudText('inform', 'Added 50 more Shotgun ammo')
-    elseif currentWeaponHash == GetHashKey("WEAPON_DOUBLEBARRELSHOTGUN") then
-        AddAmmoToPed(ped, currentWeaponHash, 50)
-        exports['mythic_notify']:DoHudText('inform', 'Added 50 more Shotgun ammo')
-    elseif currentWeaponHash == GetHashKey("WEAPON_AUTOSHOTGUN") then
-        AddAmmoToPed(ped, currentWeaponHash, 50)
-        exports['mythic_notify']:DoHudText('inform', 'Added 50 more Shotgun ammo')
     else
         exports['mythic_notify']:DoHudText('inform', 'This weapon is not compatible with this ammo')
         TriggerServerEvent('returnItem', item)
     end
 end)
+
+function table.includes(table, element)
+    for _, value in pairs(table) do
+        if value == element then
+            return true
+        end
+    end
+    return false
+end
